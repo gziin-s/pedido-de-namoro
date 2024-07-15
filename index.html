@@ -101,12 +101,14 @@
         };
 
         const moveButton = () => {
+            const rect = noButton.getBoundingClientRect();
+            createSmoke(rect.left + rect.width / 2, rect.top + rect.height / 2);
+            
             const randomX = Math.floor(Math.random() * (window.innerWidth - noButton.clientWidth));
             const randomY = Math.floor(Math.random() * (window.innerHeight - noButton.clientHeight));
             noButton.style.position = 'absolute';
             noButton.style.left = randomX + 'px';
             noButton.style.top = randomY + 'px';
-            createSmoke(noButton.offsetLeft, noButton.offsetTop);
         };
 
         noButton.addEventListener('mouseover', moveButton);
