@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pedido de Namoro</title>
     <style>
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes moveButton {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-10px, -10px); }
+        }
         body {
             display: flex;
             flex-direction: column;
@@ -15,11 +23,13 @@
             font-family: 'Arial', sans-serif;
             margin: 0;
             text-align: center;
+            animation: fadeIn 2s ease-in;
         }
         h1 {
             margin-bottom: 40px;
             font-size: 2.5em;
             color: #333;
+            animation: fadeIn 2s ease-in 1s;
         }
         button {
             padding: 15px 30px;
@@ -33,6 +43,7 @@
         button#yesButton {
             background-color: #4CAF50;
             color: white;
+            animation: fadeIn 2s ease-in 2s;
         }
         button#yesButton:hover {
             background-color: #45a049;
@@ -42,6 +53,7 @@
             background-color: #f44336;
             color: white;
             position: relative;
+            animation: fadeIn 2s ease-in 2.5s;
         }
         button#noButton:hover {
             background-color: #da190b;
@@ -63,6 +75,7 @@
             noButton.style.position = 'absolute';
             noButton.style.left = randomX + 'px';
             noButton.style.top = randomY + 'px';
+            noButton.style.animation = 'moveButton 0.5s';
         };
 
         noButton.addEventListener('mouseover', moveButton);
