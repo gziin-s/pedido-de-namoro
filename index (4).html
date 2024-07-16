@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido de Namoro</title>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes moveButton {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-10px, -10px); }
+        }
+        @keyframes smoke {
+            0% {
+                opacity: 0.8;
+                transform: scale(0.5) translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(3) translateY(-100px);
+            }
+        }
+        @keyframes trail {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+        }
+        @keyframes confettiFall {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+            100% { opacity: 0; }
+        }
+        @keyframes particleMove {
+            0% { transform: translateY(0) translateX(0); opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(10vw); opacity: 0; }
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #f8bbd0, #f48fb1);
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            text-align: center;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeIn 2s ease-in forwards;
+            position: relative;
+        }
+        h1 {
+            margin-bottom: 40px;
+            font-size: 3em;
+            color: #6b1e7b;
+            text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 25px;
+            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+        }
+        button#yesButton {
+            background-color: #4CAF50;
+            color: white;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+        }
+        button#yesButton:hover {
+            background-color: #45a049;
+            transform: scale(1.1);
+        }
+        button#noButton {
+            background-color: #f44336;
+            color: white;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+        }
+        button#noButton:hover {
+            background-color: #da190b;
+            transform: scale(1.1);
+        }
+        .smoke {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: rgba(150, 150, 150, 0.7);
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+            animation: smoke 1.5s forwards;
+        }
+        .trail {
+            position: absolute;
+            width: 10px;
+            height: 40px;
+            background: rgba(150, 150, 150, 0.7);
+            opacity: 0;
+            pointer-events: none;
+            animation: trail 0.5s forwards;
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #e91e63;
+            opacity: 0;
+            animation: confettiFall 2s ease-out forwards;
+        }
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: particleMove 5s linear infinite;
+        }
+        .cupid {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            top: 20px;
+        }
+        .cupid-left {
+            left: 20px;
+            transform: rotate(15deg);
+        }
+        .cupid-right {
+            right: 20px;
+            transform: rotate(-15deg);
+        }
+        .cupid img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="cupid cupid-left">
+        <img src="https://emojicombos.com/files/apple-emojis/ios-13.3/cupid.png" alt="Cupido">
+    </div>
+    <div class="cupid cupid-right">
+        <img src="https://emojicombos.com/files/apple-emojis/ios-13.3/cupid.png" alt="Cupido">
+    </div>
+    <div id="particle-container"></div>
+    <h1>Quer namorar comigo?</h1>
+    <button id="yesButton">Sim</button>
+    <button id="noButton">Não</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const noButton = document.getElementById('noButton');
+            const yesButton = document.getElementById('yesButton');
+            const particleContainer = document.getElementById('particle-container');
+
+            const createSmoke = (x, y) => {
+                const smoke = document.createElement('div');
+                smoke.className = 'smoke';
+                smoke.style.left = `${x}px`;
+                smoke.style.top = `${y}px`;
+                document.body.appendChild(smoke);
+                setTimeout(() => {
+                    smoke.remove();
+                }, 1500);
+            };
+
+            const createTrail = (x, y) => {
+                const trail = document.createElement('div');
+                trail.className = 'trail';
+                trail.style.left = `${x}px`;
+                trail.style.top = `${y}px`;
+                document.body.appendChild(trail);
+                setTimeout(() => {
+                    trail.remove();
+                }, 500);
+            };
+
+            const moveButton = () => {
+                const rect = noButton.getBoundingClientRect();
+                createSmoke(rect.left + rect.width / 2, rect.top + rect.height / 2);
+                createTrail(rect.left, rect.top);
+                createTrail(rect.right, rect.top);
+
+                const randomX = Math.floor(Math.random() * (window.innerWidth - noButton.clientWidth));
+                const randomY = Math.floor(Math.random() * (window.innerHeight - noButton.clientHeight));
+                noButton.style.position = 'absolute';
+                noButton.style.left = randomX + 'px';
+                noButton.style.top = randomY + 'px';
+            };
+
+            const createConfetti = (x, y) => {
+                for (let i = 0; i < 100; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                    confetti.style.left = `${x}px`;
+                    confetti.style.top = `${y}px`;
+                    confetti.style.transform = `rotate(${Math.random() * 360}deg) translate(${Math.random() * 300 - 150}px, ${Math.random() * 300 - 150}px)`;
+                    confetti.style.width = `${Math.random() * 10 + 5}px`;
+                    confetti.style.height = confetti.style.width;
+                    document.body.appendChild(confetti);
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 3000);
+                }
+            };
+
+            const createParticles = () => {
+                for (let i = 0; i < 50; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = `${Math.random() * 100}vw`;
+                    particle.style.top = `${Math.random() * 100}vh`;
+                    particle.style.animationDuration = `${Math.random() * 5 + 2}s`;
+                    particle.style.animationDelay = `${Math.random() * 5}s`;
+                    particleContainer.appendChild(particle);
+                }
+            };
+
+            noButton.addEventListener('mouseover', moveButton);
+            noButton.addEventListener('touchstart', moveButton);
+
+            yesButton.addEventListener('click', () => {
+                alert('Parabéns pela escolha, eu te amo muito minha princesa!');
+                const rect = yesButton.getBoundingClientRect();
+                createConfetti(rect.left + rect.width / 2, rect.top + rect.height / 2);
+            });
+
+            noButton.addEventListener('click', () => {
+                alert('Ah, você conseguiu clicar! 😢');
+            });
+
+            createParticles();
+        });
+    </script>
+</body>
+</html>
