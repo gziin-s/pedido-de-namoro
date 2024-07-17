@@ -47,7 +47,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(to right, #f8bbd0, #f48fb1);
+            background: linear-gradient(to right, #ffecd2, #fcb69f);
             font-family: 'Arial', sans-serif;
             margin: 0;
             text-align: center;
@@ -58,9 +58,9 @@
         }
         h1 {
             margin-bottom: 40px;
-            font-size: 3em;
-            color: #6b1e7b;
-            text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+            font-size: 2.5em;
+            color: #333;
+            position: relative;
         }
         button {
             padding: 15px 30px;
@@ -68,14 +68,12 @@
             margin: 10px;
             cursor: pointer;
             border: none;
-            border-radius: 25px;
+            border-radius: 5px;
             transition: background-color 0.3s, transform 0.3s;
-            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
         }
         button#yesButton {
             background-color: #4CAF50;
             color: white;
-            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
         }
         button#yesButton:hover {
             background-color: #45a049;
@@ -84,7 +82,7 @@
         button#noButton {
             background-color: #f44336;
             color: white;
-            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+            position: relative;
         }
         button#noButton:hover {
             background-color: #da190b;
@@ -113,7 +111,7 @@
             position: absolute;
             width: 10px;
             height: 10px;
-            background-color: #e91e63;
+            background-color: red;
             opacity: 0;
             animation: confettiFall 2s ease-out forwards;
         }
@@ -128,31 +126,24 @@
         .cupid {
             position: absolute;
             width: 100px;
-            height: 100px;
-            top: 20px;
+            height: auto;
         }
-        .cupid-left {
-            left: 20px;
-            transform: rotate(15deg);
-        }
-        .cupid-right {
-            right: 20px;
+        .cupid.left {
+            top: 10%;
+            left: 10%;
             transform: rotate(-15deg);
         }
-        .cupid img {
-            width: 100%;
-            height: 100%;
+        .cupid.right {
+            top: 10%;
+            right: 10%;
+            transform: rotate(15deg);
         }
     </style>
 </head>
 <body>
-    <div class="cupid cupid-left">
-        <img src="https://emojicombos.com/files/apple-emojis/ios-13.3/cupid.png" alt="Cupido">
-    </div>
-    <div class="cupid cupid-right">
-        <img src="https://emojicombos.com/files/apple-emojis/ios-13.3/cupid.png" alt="Cupido">
-    </div>
     <div id="particle-container"></div>
+    <img src="https://cdn.pixabay.com/photo/2020/05/06/17/50/valentines-day-5145072_1280.png" alt="Cupido" class="cupid left">
+    <img src="https://cdn.pixabay.com/photo/2020/05/06/17/50/valentines-day-5145072_1280.png" alt="Cupido" class="cupid right">
     <h1>Quer namorar comigo?</h1>
     <button id="yesButton">Sim</button>
     <button id="noButton">Não</button>
